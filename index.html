@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Something Special For You</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+
+    <style>
+
+        * {
+
+            margin: 0;
+
+            padding: 0;
+
+            box-sizing: border-box;
+
+            font-family: 'Arial', sans-serif;
+
+        }
+
+
+
+        @font-face {
+
+            font-family: 'Neon';
+
+            src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/webfonts/fa-solid-900.woff2') format('woff2');
+
+        }
+
+
+
+        body {
+
+            background: linear-gradient(135deg, #0b0b1e 0%, #1e0b33 50%, #330b24 100%);
+
+            height: 100vh;
+
+            overflow: hidden;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            align-items: center;
+
+            color: white;
+
+            position: relative;
+
+        }
+
+
+
+        .container {
+
+            text-align: center;
+
+            z-index: 10;
+
+            padding: 2rem;
+
+            position: relative;
+
+            max-width: 800px;
+
+        }
+
+
+
+        canvas {
+
+            position: absolute;
+
+            top: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 100%;
+
+            z-index: 1;
+
+        }
+
+
+
+        /* Neon frame around container */
+
+        .neon-frame {
+
+            position: absolute;
+
+            top: -10px;
+
+            left: -10px;
+
+            right: -10px;
+
+            bottom: -10px;
+
+            border: 2px solid #ff2d75;
+
+            border-radius: 10px;
+
+            box-shadow: 0 0 20px #ff2d75, inset 0 0 10px #ff2d75;
+
+            z-index: -1;
+
+            opacity: 0;
+
+            animation: framePulse 4s infinite alternate;
+
+        }
+
+
+
+        @keyframes framePulse {
+
+            0% {
+
+                box-shadow: 0 0 20px #ff2d75, inset 0 0 10px #ff2d75;
+
+                border-color: #ff2d75;
+
+            }
+
+            33% {
+
+                box-shadow: 0 0 25px #4de8ff, inset 0 0 15px #4de8ff;
+
+                border-color: #4de8ff;
+
+            }
+
+            66% {
+
+                box-shadow: 0 0 30px #c26eff, inset 0 0 20px #c26eff;
+
+                border-color: #c26eff;
+
+            }
+
+            100% {
+
+                box-shadow: 0 0 20px #ff2d75, inset 0 0 10px #ff2d75;
+
+                border-color: #ff2d75;
+
+            }
+
+        }
+
+
+
+        h1 {
+
+            font-size: 4rem;
+
+            margin-bottom: 1.5rem;
+
+            font-weight: 500;
+
+            letter-spacing: 3px;
+
+            text-transform: uppercase;
+
+            opacity: 0;
+
+        }
+
+
+
+        .text-glitch {
+
+            position: relative;
+
+            color: transparent;
+
+        }
+
+
+
+        .text-glitch::before,
+
+        .text-glitch::after {
+
+            content: attr(data-text);
+
+            position: absolute;
+
+            top: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 100%;
+
+        }
+
+
+
+        .text-glitch::before {
+
+            color: #fff;
+
+            text-shadow: 0 0 10px #ff2d75, 0 0 20px #ff2d75, 0 0 30px #ff2d75, 0 0 40px #ff2d75;
+
+            z-index: 1;
+
+            animation: glitch-animation 3s infinite;
+
+        }
+
+
+
+        .text-glitch::after {
+
+            color: #fff;
+
+            text-shadow: 0 0 10px #4de8ff, 0 0 20px #4de8ff, 0 0 30px #4de8ff;
+
+            z-index: 2;
+
+            animation: glitch-animation 2s infinite reverse;
+
+        }
+
+
+
+        @keyframes glitch-animation {
+
+            0% {
+
+                transform: translate(0);
+
+            }
+
+            20% {
+
+                transform: translate(-2px, 2px);
+
+            }
+
+            40% {
+
+                transform: translate(-2px, -2px);
+
+            }
+
+            60% {
+
+                transform: translate(2px, 2px);
+
+            }
+
+            80% {
+
+                transform: translate(2px, -2px);
+
+            }
+
+            100% {
+
+                transform: translate(0);
+
+            }
+
+        }
+
+
+
+        .subtitle {
+
+            font-size: 1.5rem;
+
+            margin-bottom: 3rem;
+
+            color: rgba(255, 255, 255, 0.7);
+
+            font-style: italic;
+
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+
+            opacity: 0;
+
+        }
+
+
+
+        .btn-container {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 1rem;
+
+            align-items: center;
+
+            justify-content: center;
+
+            margin-top: 1rem;
+
+            opacity: 0;
+
+        }
+
+
+
+        .btn {
+
+            position: relative;
+
+            padding: 1rem 3rem;
+
+            font-size: 1.25rem;
+
+            background: transparent;
+
+            color: #4de8ff;
+
+            border: 2px solid #4de8ff;
+
+            border-radius: 50px;
+
+            box-shadow: 0 0 15px #4de8ff, inset 0 0 15px #4de8ff;
+
+            text-shadow: 0 0 5px #4de8ff;
+
+            cursor: pointer;
+
+            transition: all 0.3s ease;
+
+            overflow: hidden;
+
+            outline: none;
+
+        }
+
+
+
+        .btn:hover {
+
+            background: rgba(77, 232, 255, 0.1);
+
+            box-shadow: 0 0 25px #4de8ff, inset 0 0 25px #4de8ff;
+
+            transform: scale(1.05);
+
+        }
+
+
+
+        .btn:active {
+
+            transform: scale(0.95);
+
+        }
+
+
+
+        .btn::after {
+
+            content: '';
+
+            position: absolute;
+
+            top: 50%;
+
+            left: 50%;
+
+            width: 200%;
+
+            height: 200%;
+
+            background: rgba(255, 255, 255, 0.1);
+
+            border-radius: 50%;
+
+            transform: translate(-50%, -50%) scale(0);
+
+            transition: transform 0.5s ease-out;
+
+            pointer-events: none;
+
+        }
+
+
+
+        .btn.clicked::after {
+
+            transform: translate(-50%, -50%) scale(1);
+
+            opacity: 0;
+
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+
+        }
+
+
+
+        /* Music button */
+
+        .music-btn {
+
+            position: absolute;
+
+            top: 20px;
+
+            right: 20px;
+
+            width: 50px;
+
+            height: 50px;
+
+            border-radius: 50%;
+
+            background: transparent;
+
+            border: 2px solid #c26eff;
+
+            color: #c26eff;
+
+            font-size: 1.2rem;
+
+            cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            box-shadow: 0 0 10px #c26eff;
+
+            z-index: 100;
+
+            transition: all 0.3s ease;
+
+            opacity: 0;
+
+        }
+
+
+
+        .music-btn:hover {
+
+            box-shadow: 0 0 20px #c26eff;
+
+            transform: scale(1.1);
+
+        }
+
+
+
+        .music-btn.playing::after {
+
+            content: '♪';
+
+            position: absolute;
+
+            animation: musicNote 2s infinite;
+
+            opacity: 0;
+
+        }
+
+
+
+        @keyframes musicNote {
+
+            0% {
+
+                top: 0;
+
+                left: 0;
+
+                opacity: 1;
+
+            }
+
+            100% {
+
+                top: -20px;
+
+                left: 10px;
+
+                opacity: 0;
+
+            }
+
+        }
+
+
+
+        /* Heart shape that appears on click */
+
+        .heart {
+
+            position: absolute;
+
+            width: 100px;
+
+            height: 100px;
+
+            visibility: hidden;
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            z-index: 9;
+
+            transition: all 0.5s ease;
+
+        }
+
+
+
+        .heart::before, 
+
+        .heart::after {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+
+            width: 50px;
+
+            height: 80px;
+
+            border-radius: 50px 50px 0 0;
+
+            background: #ff2d75;
+
+            box-shadow: 0 0 15px #ff2d75;
+
+        }
+
+
+
+        .heart::before {
+
+            left: 50px;
+
+            transform: rotate(-45deg);
+
+            transform-origin: 0 100%;
+
+        }
+
+
+
+        .heart::after {
+
+            left: 0;
+
+            transform: rotate(45deg);
+
+            transform-origin: 100% 100%;
+
+        }
+
+
+
+        .magic-text {
+
+            position: absolute;
+
+            font-size: 1.2rem;
+
+            opacity: 0;
+
+            color: #c26eff;
+
+            text-shadow: 0 0 10px #c26eff;
+
+            pointer-events: none;
+
+            z-index: 10;
+
+            transition: all 0.5s ease;
+
+        }
+
+
+
+        /* Countdown styling */
+
+        .countdown-container {
+
+            display: none;
+
+            opacity: 0;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 1rem;
+
+            margin-top: 2rem;
+
+        }
+
+
+
+        .countdown-text {
+
+            font-size: 1.5rem;
+
+            color: #fff;
+
+            text-shadow: 0 0 10px #c26eff;
+
+        }
+
+
+
+        .countdown {
+
+            font-size: 3rem;
+
+            font-weight: bold;
+
+            color: #fff;
+
+            text-shadow: 0 0 10px #ff2d75, 0 0 20px #ff2d75;
+
+        }
+
+
+
+        /* Polaroid photo effect */
+
+        .polaroid {
+
+            display: none;
+
+            background: #fff;
+
+            padding: 1rem;
+
+            padding-bottom: 3rem;
+
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+
+            transform: rotate(-5deg);
+
+            transition: all 0.3s ease;
+
+            opacity: 0;
+
+            z-index: 20;
+
+            position: relative;
+
+        }
+
+
+
+        .polaroid:hover {
+
+            transform: rotate(0deg) scale(1.05);
+
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+
+        }
+
+
+
+        .polaroid img {
+
+            width: 200px;
+
+            height: 200px;
+
+            object-fit: cover;
+
+            margin-bottom: 0.5rem;
+
+        }
+
+
+
+        .polaroid p {
+
+            font-family: 'Neon', cursive;
+
+            color: #333;
+
+            text-align: center;
+
+            font-size: 1rem;
+
+        }
+
+
+
+        /* Animated background elements */
+
+        .bg-line {
+
+            position: absolute;
+
+            background: linear-gradient(90deg, transparent, rgba(77, 232, 255, 0.3), transparent);
+
+            height: 1px;
+
+            width: 100%;
+
+            z-index: 1;
+
+            opacity: 0.5;
+
+        }
+
+
+
+        .neon-circle {
+
+            position: absolute;
+
+            border-radius: 50%;
+
+            border: 2px solid;
+
+            opacity: 0.6;
+
+            z-index: 1;
+
+        }
+
+
+
+        /* Loading overlay */
+
+        .loading-overlay {
+
+            position: fixed;
+
+            top: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 100%;
+
+            background: #0b0b1e;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            z-index: 1000;
+
+            transition: opacity 1.5s ease;
+
+        }
+
+
+
+        .loader {
+
+            width: 100px;
+
+            height: 100px;
+
+            border-radius: 50%;
+
+            border: 5px solid transparent;
+
+            border-top-color: #ff2d75;
+
+            border-bottom-color: #4de8ff;
+
+            animation: spin 1.5s linear infinite;
+
+        }
+
+
+
+        @keyframes spin {
+
+            0% {
+
+                transform: rotate(0deg);
+
+                border-top-color: #ff2d75;
+
+                border-bottom-color: #4de8ff;
+
+            }
+
+            50% {
+
+                border-top-color: #4de8ff;
+
+                border-bottom-color: #ff2d75;
+
+            }
+
+            100% {
+
+                transform: rotate(360deg);
+
+                border-top-color: #ff2d75;
+
+                border-bottom-color: #4de8ff;
+
+            }
+
+        }
+
+
+
+        /* Custom cursor */
+
+        .custom-cursor {
+
+            position: fixed;
+
+            width: 20px;
+
+            height: 20px;
+
+            border-radius: 50%;
+
+            background: transparent;
+
+            border: 2px solid #ff2d75;
+
+            box-shadow: 0 0 15px #ff2d75;
+
+            transform: translate(-50%, -50%);
+
+            pointer-events: none;
+
+            mix-blend-mode: screen;
+
+            z-index: 9999;
+
+            transition: width 0.3s, height 0.3s, border-color 0.3s, box-shadow 0.3s;
+
+        }
+
+
+
+        .inner-cursor {
+
+            position: fixed;
+
+            width: 6px;
+
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: #ff2d75;
+
+            transform: translate(-50%, -50%);
+
+            pointer-events: none;
+
+            z-index: 9999;
+
+            transition: background 0.3s;
+
+        }
+
+
+
+        /* Modal styling */
+
+        .modal {
+
+            display: none;
+
+            position: fixed;
+
+            top: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 100%;
+
+            background: rgba(0, 0, 0, 0.8);
+
+            z-index: 1000;
+
+            justify-content: center;
+
+            align-items: center;
+
+            opacity: 0;
+
+            transition: opacity 0.5s ease;
+
+        }
+
+
+
+        .modal-content {
+
+            background: linear-gradient(135deg, #1a0b33 0%, #330b24 100%);
+
+            padding: 2rem;
+
+            border-radius: 10px;
+
+            max-width: 500px;
+
+            width: 90%;
+
+            position: relative;
+
+            box-shadow: 0 0 30px #c26eff, inset 0 0 15px #c26eff;
+
+            border: 2px solid #c26eff;
+
+            text-align: center;
+
+        }
+
+
+
+        .modal-content h2 {
+
+            font-size: 2rem;
+
+            margin-bottom: 1rem;
+
+            color: #fff;
+
+            text-shadow: 0 0 10px #c26eff;
+
+        }
+
+
+
+        .modal-content p {
+
+            font-size: 1.1rem;
+
+            margin-bottom: 1.5rem;
+
+            color: rgba(255, 255, 255, 0.8);
+
+        }
+
+
+
+        .close-modal {
+
+            position: absolute;
+
+            top: 10px;
+
+            right: 10px;
+
+            font-size: 1.5rem;
+
+            background: none;
+
+            border: none;
+
+            color: #fff;
+
+            cursor: pointer;
+
+            text-shadow: 0 0 5px #fff;
+
+            opacity: 0.7;
+
+            transition: opacity 0.3s;
+
+        }
+
+
+
+        .close-modal:hover {
+
+            opacity: 1;
+
+        }
+
+
+
+        .modal-input {
+
+            width: 100%;
+
+            padding: 0.8rem;
+
+            margin-bottom: 1rem;
+
+            border: 2px solid #4de8ff;
+
+            background: rgba(0, 0, 0, 0.3);
+
+            color: #fff;
+
+            border-radius: 5px;
+
+            outline: none;
+
+            box-shadow: 0 0 10px rgba(77, 232, 255, 0.5);
+
+            transition: all 0.3s ease;
+
+        }
+
+
+
+        .modal-input:focus {
+
+            border-color: #ff2d75;
+
+            box-shadow: 0 0 15px rgba(255, 45, 117, 0.7);
+
+        }
+
+
+
+        .modal-btn {
+
+            padding: 0.7rem 2rem;
+
+            background: transparent;
+
+            border: 2px solid #4de8ff;
+
+            color: #4de8ff;
+
+            border-radius: 30px;
+
+            cursor: pointer;
+
+            font-size: 1rem;
+
+            box-shadow: 0 0 10px #4de8ff, inset 0 0 5px #4de8ff;
+
+            transition: all 0.3s ease;
+
+        }
+
+
+
+        .modal-btn:hover {
+
+            background: rgba(77, 232, 255, 0.1);
+
+            box-shadow: 0 0 15px #4de8ff, inset 0 0 10px #4de8ff;
+
+        }
+
+
+
+        @media (max-width: 768px) {
+
+            h1 {
+
+                font-size: 2.5rem;
+
+            }
+
+            
+
+            .subtitle {
+
+                font-size: 1.2rem;
+
+                margin-bottom: 2rem;
+
+            }
+
+            
+
+            .btn {
+
+                padding: 0.8rem 2.5rem;
+
+                font-size: 1.1rem;
+
+            }
+
+
+
+            .countdown {
+
+                font-size: 2.5rem;
+
+            }
+
+
+
+            .polaroid {
+
+                transform: rotate(-3deg) scale(0.9);
+
+            }
+
+
+
+            .polaroid img {
+
+                width: 180px;
+
+                height: 180px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Loading overlay -->
+
+    <div class="loading-overlay" id="loadingOverlay">
+
+        <div class="loader"></div>
+
+    </div>
+
+
+
+    <!-- Custom cursor -->
+
+    <div class="custom-cursor" id="customCursor"></div>
+
+    <div class="inner-cursor" id="innerCursor"></div>
+
+
+
+    <!-- Background canvas -->
+
+    <canvas id="bgCanvas"></canvas>
+
+    
+
+    <!-- Music button -->
+
+    <button class="music-btn" id="musicBtn">♪</button>
+
+    
+
+    <!-- Main content -->
+
+    <div class="container">
+
+        <div class="neon-frame"></div>
+
+        <h1 class="text-glitch" data-text="I have something for you...">I have something for you...</h1>
+
+        <p class="subtitle">A special moment awaits...</p>
+
+        
+
+        <div class="btn-container">
+
+            <button class="btn" id="revealBtn">Click to Reveal</button>
+
+            <button class="btn" id="specialBtn" style="display: none; color: #ff2d75; border-color: #ff2d75; box-shadow: 0 0 15px #ff2d75, inset 0 0 15px #ff2d75; text-shadow: 0 0 5px #ff2d75;">Special Message</button>
+
+        </div>
+
+        
+
+        <!-- Countdown section -->
+
+        <div class="countdown-container" id="countdownContainer">
+
+            <p class="countdown-text">Magic happens in...</p>
+
+            <div class="countdown" id="countdown">5</div>
+
+        </div>
+
+        
+
+        <!-- Polaroid photo -->
+
+        <div class="polaroid" id="polaroid">
+
+            
+
+            <p>Forever yours ♥</p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Heart element -->
+
+    <div class="heart" id="heart"></div>
+
+    
+
+    <!-- Name input modal -->
+
+    <div class="modal" id="nameModal">
+
+        <div class="modal-content animate__animated animate__fadeIn">
+
+            <button class="close-modal" id="closeModal">×</button>
+
+            <h2>Before we begin...</h2>
+
+            <p>What's your name, beautiful?</p>
+
+            <input type="text" class="modal-input" id="nameInput" placeholder="Enter your name...">
+
+            <button class="modal-btn" id="submitName">Continue</button>
+
+        </div>
+
+    </div>
+
+    
+
+    <!-- Special message modal -->
+
+    <div class="modal" id="messageModal">
+
+        <div class="modal-content animate__animated animate__fadeIn">
+
+            <button class="close-modal" id="closeMessageModal">×</button>
+
+            <h2>My Special One</h2>
+
+            <p id="personalMessage">You are the light in my darkness, the warmth in my cold days. Every moment with you feels like magic, and I can't wait to create more memories together.</p>
+
+            <button class="modal-btn" id="loveButton">I Love You Too</button>
+
+        </div>
+
+    </div>
+
+
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // Background and loading setup
+
+            const loadingOverlay = document.getElementById('loadingOverlay');
+
+            const container = document.querySelector('.container');
+
+            const revealBtn = document.getElementById('revealBtn');
+
+            const specialBtn = document.getElementById('specialBtn');
+
+            const heart = document.getElementById('heart');
+
+            const musicBtn = document.getElementById('musicBtn');
+
+            const nameModal = document.getElementById('nameModal');
+
+            const closeModal = document.getElementById('closeModal');
+
+            const nameInput = document.getElementById('nameInput');
+
+            const submitName = document.getElementById('submitName');
+
+            const messageModal = document.getElementById('messageModal');
+
+            const closeMessageModal = document.getElementById('closeMessageModal');
+
+            const personalMessage = document.getElementById('personalMessage');
+
+            const loveButton = document.getElementById('loveButton');
+
+            const countdownContainer = document.getElementById('countdownContainer');
+
+            const countdown = document.getElementById('countdown');
+
+            const polaroid = document.getElementById('polaroid');
+
+      
